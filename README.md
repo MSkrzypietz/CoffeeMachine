@@ -1,5 +1,4 @@
 # CoffeeMachine
-Project to practice the command, filter and observer design patterns
 
 Eine Kaffeemaschine wird über eine Fernbedienung mit Kommandos gesteuert. Als Kommandos
 stehen BREW und CLEAN zur Verfügung. Das Kommando BREW startet nachfolgenden Prozess.
