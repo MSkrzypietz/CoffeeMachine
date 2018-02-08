@@ -1,4 +1,4 @@
-# CoffeeMachine
+# Coffee Machine
 
 Eine Kaffeemaschine wird über eine Fernbedienung mit Kommandos gesteuert. Als Kommandos
 stehen BREW und CLEAN zur Verfügung. Das Kommando BREW startet nachfolgenden Prozess.
