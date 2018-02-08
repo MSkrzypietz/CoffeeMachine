@@ -17,14 +17,6 @@ public abstract class Container {
         currentColIndex = 0;
     }
 
-    public void printContainer() {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++)
-                System.out.print(matrix[i][j]);
-            System.out.println();
-        }
-    }
-
     public void add(int amount) {
         if (amount <= 0) return;
         for (int i = currentRowIndex; i > 0; i--) {
@@ -32,9 +24,13 @@ public abstract class Container {
                 currentColIndex = 0;
                 matrix[i][j] = unit;
                 if (--amount == 0) {
-                    //if (currentRowIndex )
-                    currentRowIndex = i;
-                    currentColIndex = j;
+                    if (j == matrix[i].length - 1) {
+                        currentRowIndex = i - 1;
+                        currentColIndex = 0;
+                    } else {
+                        currentRowIndex = i;
+                        currentColIndex = j + 1;
+                    }
                     return;
                 }
             }
@@ -43,17 +39,35 @@ public abstract class Container {
 
     public void remove(int amount) {
         if (amount <= 0) return;
-        for (int i = currentRowIndex; i < matrix.length - 1; i++) {
-            for (int j = currentColIndex - 1; j >= 0; j--) {
-                currentColIndex = matrix[i].length;
-                if (amount == 0) {
-                    currentRowIndex = i;
-                    currentColIndex = j;
+        if (currentColIndex == 0) {
+            currentColIndex = matrix[currentColIndex].length - 1;
+            currentRowIndex++;
+        } else {
+            currentColIndex--;
+        }
+        for (int i = currentRowIndex; i < matrix.length; i++) {
+            for (int j = currentColIndex; j >= 0; j--) {
+                currentColIndex = matrix[i].length - 1;
+                matrix[i][j] = '-';
+                if (--amount == 0) {
+                    if (j == matrix[i].length) {
+                        currentRowIndex = i - 1;
+                        currentColIndex = 0;
+                    } else {
+                        currentRowIndex = i;
+                        currentColIndex = j;
+                    }
                     return;
                 }
-                matrix[i][j] = '-';
-                amount--;
             }
+        }
+    }
+
+    public void printContainer() {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++)
+                System.out.print(matrix[i][j]);
+            System.out.println();
         }
     }
 
