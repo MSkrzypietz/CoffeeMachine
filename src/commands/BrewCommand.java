@@ -1,9 +1,17 @@
 package commands;
 
+import base.CoffeeMachine;
+
 public class BrewCommand implements ICommand {
 
-    public void execute() {
+    private CoffeeMachine coffeeMachine;
 
+    public BrewCommand(CoffeeMachine coffeeMachine) {
+        this.coffeeMachine = coffeeMachine;
+    }
+
+    public void execute() {
+        coffeeMachine.brewCoffee();
     }
 
 }

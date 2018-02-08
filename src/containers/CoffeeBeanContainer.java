@@ -13,4 +13,8 @@ public class CoffeeBeanContainer extends Container {
                 matrix[i][j] = '-';
     }
 
+    public void grindCoffeeBeans(int amount) {
+        System.out.println("Grinding coffee beans...");
+    }
+
 }
