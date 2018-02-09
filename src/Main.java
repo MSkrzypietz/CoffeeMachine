@@ -1,14 +1,18 @@
+import base.CoffeeMachine;
+import base.RemoteControl;
+import commands.BrewCommand;
+import commands.ICommand;
 import containers.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("CoffeBeanContainer");
-        Container container = new CoffeeBeanContainer();
-        container.add(23);
-        //container.add(1);
-        //container.add(4);
-        container.printContainer();
+
+        CoffeeMachine coffeeMachine = new CoffeeMachine();
+        ICommand command = new BrewCommand(coffeeMachine);
+        RemoteControl remoteControl = new RemoteControl(command);
+        remoteControl.pressButton();
+
     }
 
 }

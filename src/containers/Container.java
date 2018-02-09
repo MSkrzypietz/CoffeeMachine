@@ -19,7 +19,7 @@ public abstract class Container {
 
     public void add(int amount) {
         if (amount <= 0) return;
-        for (int i = currentRowIndex; i > 0; i--) {
+        for (int i = currentRowIndex; i >= 0; i--) {
             for (int j = currentColIndex; j < matrix[i].length; j++) {
                 currentColIndex = 0;
                 matrix[i][j] = unit;
