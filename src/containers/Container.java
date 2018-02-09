@@ -6,6 +6,8 @@ public abstract class Container {
     protected final int capacity;
     protected final char unit;
 
+    protected int currentAmount = 0;
+
     private int currentRowIndex;
     private int currentColIndex;
 
@@ -23,6 +25,7 @@ public abstract class Container {
             for (int j = currentColIndex; j < matrix[i].length; j++) {
                 currentColIndex = 0;
                 matrix[i][j] = unit;
+                currentAmount++;
                 if (--amount == 0) {
                     if (j == matrix[i].length - 1) {
                         currentRowIndex = i - 1;
@@ -49,6 +52,7 @@ public abstract class Container {
             for (int j = currentColIndex; j >= 0; j--) {
                 currentColIndex = matrix[i].length - 1;
                 matrix[i][j] = '-';
+                currentAmount--;
                 if (--amount == 0) {
                     if (j == matrix[i].length) {
                         currentRowIndex = i - 1;
@@ -61,6 +65,10 @@ public abstract class Container {
                 }
             }
         }
+    }
+
+    public void fillUp() {
+        add(capacity);
     }
 
     public void printContainer() {
