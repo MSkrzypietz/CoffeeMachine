@@ -2,19 +2,21 @@ package base;
 
 import containers.*;
 import observers.ICoffeeFlourLevelListener;
+import observers.IWaterTempListener;
 
 public class CoffeeMachine {
 
     private Container coffeeBeanContainer = new CoffeeBeanContainer();
     private Container coffeeFlourContainer = new CoffeeFlourContainer();
     private Container waterContainer = new WaterContainer();
-    private Container brewContainer = new BrewContainer();
+    private Container brewContainer = new BrewContainer(this);
     private Container wasteContainer = new WasteContainer();
 
     public CoffeeMachine() {
         coffeeBeanContainer.fillUp();
         waterContainer.fillUp();
         ((CoffeeFlourContainer) coffeeFlourContainer).getCoffeeFlourLevelObserver().addListener((ICoffeeFlourLevelListener) waterContainer);
+        ((WaterContainer) waterContainer).getWaterTempObserver().addListener((IWaterTempListener) brewContainer);
     }
 
     public void brewCoffee() {
@@ -22,8 +24,6 @@ public class CoffeeMachine {
     }
 
     private void grindCoffeeBeans(int amount) {
-        coffeeBeanContainer.printContainer();
-        coffeeFlourContainer.printContainer();
         for (int i = 0; i < amount; i++) {
             System.out.println("Grinding coffee beans...");
             coffeeBeanContainer.remove(1);
@@ -31,8 +31,6 @@ public class CoffeeMachine {
             coffeeFlourContainer.add(5);
             ((CoffeeFlourContainer) coffeeFlourContainer).checkIfFullToHeatWater();
         }
-        coffeeBeanContainer.printContainer();
-        coffeeFlourContainer.printContainer();
     }
 
     private void sleepThread(int duration) {
@@ -45,6 +43,14 @@ public class CoffeeMachine {
 
     public void clean() {
 
+    }
+
+    public Container getCoffeeFlourContainer() {
+        return coffeeFlourContainer;
+    }
+
+    public Container getWaterContainer() {
+        return waterContainer;
     }
 
 }
