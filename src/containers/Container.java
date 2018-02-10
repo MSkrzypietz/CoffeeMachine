@@ -40,6 +40,27 @@ public abstract class Container {
         }
     }
 
+    public void add(int amount, char unit) {
+        if (amount <= 0) return;
+        for (int i = currentRowIndex; i >= 0; i--) {
+            for (int j = currentColIndex; j < matrix[i].length; j++) {
+                currentColIndex = 0;
+                matrix[i][j] = unit;
+                currentAmount++;
+                if (--amount == 0) {
+                    if (j == matrix[i].length - 1) {
+                        currentRowIndex = i - 1;
+                        currentColIndex = 0;
+                    } else {
+                        currentRowIndex = i;
+                        currentColIndex = j + 1;
+                    }
+                    return;
+                }
+            }
+        }
+    }
+
     public void remove(int amount) {
         if (amount <= 0) return;
         if (currentColIndex == 0) {
