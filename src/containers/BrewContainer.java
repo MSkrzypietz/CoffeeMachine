@@ -30,15 +30,17 @@ public class BrewContainer extends Container implements IWaterTempListener {
 
     private void combineHotWaterAndCoffeeFlour() {
         System.out.println("Combining the coffee flour with the hot water in the brew container...");
+        sleepThread(1000);
 
-        coffeeMachine.getCoffeeFlourContainer().remove(50);
-        coffeeMachine.getWaterContainer().remove(500);
+        add(coffeeMachine.getWaterContainer().removeAll(), 'H');
+        add(coffeeMachine.getCoffeeFlourContainer().removeAll(), 'F');
 
-        add(500, 'H');
-        add(50, 'F');
+        super.printContainer();
     }
 
     private void shuffle() {
+        System.out.println("Shuffling the container...");
+        sleepThread(2000);
         for (int i = matrix.length - 1; i > 0; i--) {
             for (int j = matrix[i].length - 1; j > 0; j--) {
                 int m = Configuration.instance.randomGenerator.nextInt(0, i);
@@ -49,24 +51,38 @@ public class BrewContainer extends Container implements IWaterTempListener {
                 matrix[m][n] = temp;
             }
         }
+        super.printContainer();
+        sleepThread(1000);
     }
 
     private void createCoffee() {
-        ArrayList<Integer> hotWaterUnits = new ArrayList<>();
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] == 'H')
-                    hotWaterUnits.add(i*matrix[i].length + j);
-            }
-        }
-        for (int i = 0; i < 50; i++) {
+        // With these lists I'm making sure to only use a flour or hot water unit once
+        ArrayList<Integer> flourUnits = getUnitsByType('F');
+        ArrayList<Integer> hotWaterUnits = getUnitsByType('H');
+
+        while (!flourUnits.isEmpty()) {
             System.out.println("Creating 10 coffee units...");
-            //sleepThread(1000);
+            flourUnits.remove(Configuration.instance.randomGenerator.nextInt(0, flourUnits.size() - 1));
+            sleepThread(1000);
             for (int j = 0; j < 10; j++) {
                 int index = hotWaterUnits.remove(Configuration.instance.randomGenerator.nextInt(0, hotWaterUnits.size() - 1));
                 matrix[index / matrix[0].length][index % matrix[0].length] = 'C';
             }
+            super.printContainer();
         }
+
+        System.out.println("Done brewing the coffee...");
+    }
+
+    public ArrayList<Integer> getUnitsByType(char unitType) {
+        ArrayList<Integer> units = new ArrayList<>();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] == unitType)
+                    units.add(i*matrix[i].length + j);
+            }
+        }
+        return units;
     }
 
     private void sleepThread(int duration) {

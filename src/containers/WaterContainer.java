@@ -30,16 +30,18 @@ public class WaterContainer extends Container implements ICoffeeFlourLevelListen
         ArrayList<Integer> waterUnits = new ArrayList<>();
         for (int i = 0; i < 500; i++)
             waterUnits.add(i);
+        super.printContainer();
         for (int i = 0; i < 5; i++) {
             sleepThread(1000);
             for (int j = 0; j < 100; j++) {
                 int index = waterUnits.remove(Configuration.instance.randomGenerator.nextInt(0, waterUnits.size() - 1));
                 matrix[index / matrix[0].length][index % matrix[0].length] = 'H';
             }
-            //super.printContainer();
-            //System.out.println("############################################################################");
+            System.out.println("#############################");
+            super.printContainer();
         }
-        System.out.println("Water is now hot...");
+        System.out.println("#############################");
+        System.out.println("The water is now heated up...");
         waterTempObserver.waterIsHeated();
     }
 
