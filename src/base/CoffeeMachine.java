@@ -1,6 +1,9 @@
 package base;
 
 import containers.*;
+import filters.CoffeeFilter;
+import filters.FlourFilter;
+import filters.IFilter;
 import observers.ICoffeeFlourLevelListener;
 import observers.IWaterTempListener;
 
@@ -20,11 +23,26 @@ public class CoffeeMachine {
     }
 
     public void brewCoffee() {
-        grindCoffeeBeans(10);
+        System.out.println("Starting to brew a coffee...");
+        sleepThread(1000);
+        grindCoffeeBeans();
+
+        IFilter coffeeFilter = new CoffeeFilter();
+        Container coffeeCup = coffeeFilter.filterContainer(brewContainer);
+        sleepThread(1000);
+        System.out.println("Enjoy your coffee...");
+        coffeeCup.printContainer();
+
+        IFilter wasteFilter = new FlourFilter();
+        wasteContainer = wasteFilter.filterContainer(brewContainer);
+        sleepThread(1000);
+        wasteContainer.printContainer();
+
+        brewContainer.removeAll();
     }
 
-    private void grindCoffeeBeans(int amount) {
-        for (int i = 0; i < amount; i++) {
+    private void grindCoffeeBeans() {
+        for (int i = 0; i < 10; i++) {
             System.out.println("Grinding coffee beans...");
             coffeeBeanContainer.remove(1);
             sleepThread(200);
@@ -42,7 +60,7 @@ public class CoffeeMachine {
     }
 
     public void clean() {
-
+        ((WasteContainer) wasteContainer).clean();
     }
 
     public Container getCoffeeFlourContainer() {
