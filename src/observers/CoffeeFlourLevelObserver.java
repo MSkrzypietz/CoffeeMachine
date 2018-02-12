@@ -17,7 +17,7 @@ public class CoffeeFlourLevelObserver {
         this.listeners.add(listener);
     }
 
-    public void remoteListener(ICoffeeFlourLevelListener listener) {
+    public void removeListener(ICoffeeFlourLevelListener listener) {
         this.listeners.remove(listener);
     }
 

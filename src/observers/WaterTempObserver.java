@@ -17,7 +17,7 @@ public class WaterTempObserver {
         this.listeners.add(listener);
     }
 
-    public void remoteListener(IWaterTempListener listener) {
+    public void removeListener(IWaterTempListener listener) {
         this.listeners.remove(listener);
     }
 
